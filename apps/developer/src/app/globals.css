@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-midnight: #081E34;
+  --color-midnight-light: #12334F;
+  --color-emerald: #00E6B5;
+  --color-emerald-dark: #00C49A;
+  --color-royal: #6C63FF;
+  --color-royal-light: #8B83FF;
+
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F8FAFC;
+  --color-bg-tertiary: #F1F5F9;
+
+  --color-text-primary: #081E34;
+  --color-text-secondary: #344563;
+  --color-text-tertiary: #7A8BA0;
+
+  --color-border-default: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
+
+  --color-success: #00E6B5;
+  --color-success-bg: #ECFDF5;
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-bg: #FEF2F2;
+  --color-info: #6C63FF;
+  --color-info-bg: #EEF2FF;
+
+  --color-sidebar-bg: #081E34;
+  --color-sidebar-hover: rgba(255, 255, 255, 0.05);
+  --color-sidebar-active-bg: rgba(0, 230, 181, 0.12);
+  --color-sidebar-active-text: #00E6B5;
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --shadow-sm: 0 1px 2px rgba(8, 30, 52, 0.04), 0 1px 3px rgba(8, 30, 52, 0.06);
+  --shadow-md: 0 4px 6px rgba(8, 30, 52, 0.04), 0 2px 4px rgba(8, 30, 52, 0.06);
+  --shadow-lg: 0 10px 15px rgba(8, 30, 52, 0.06), 0 4px 6px rgba(8, 30, 52, 0.04);
+  --shadow-xl: 0 20px 25px rgba(8, 30, 52, 0.08), 0 8px 10px rgba(8, 30, 52, 0.04);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background-color: rgba(0, 230, 181, 0.2);
+  color: #081E34;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  overflow-x: hidden;
+}
