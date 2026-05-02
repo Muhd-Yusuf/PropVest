@@ -12,6 +12,7 @@ export interface User {
   email: string;
   phone: string;
   isVerified: boolean;
+  profilePicture?: string;
 }
 
 interface AuthContextValue {
@@ -24,6 +25,7 @@ interface AuthContextValue {
   sendPasswordReset: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
   completeOnboarding: () => Promise<void>;
+  updateProfile: (updates: Partial<User>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -36,6 +38,7 @@ const AuthContext = createContext<AuthContextValue>({
   sendPasswordReset: async () => {},
   signOut: async () => {},
   completeOnboarding: async () => {},
+  updateProfile: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -110,6 +113,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await AsyncStorage.setItem(STORAGE_KEYS.hasOnboarded, 'true');
   }, []);
 
+  const updateProfile = useCallback(async (updates: Partial<User>) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const updated = { ...prev, ...updates };
+      AsyncStorage.setItem(STORAGE_KEYS.authUser, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -122,6 +134,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         sendPasswordReset,
         signOut,
         completeOnboarding,
+        updateProfile,
       }}
     >
       {children}

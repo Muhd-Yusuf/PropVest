@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import * as Haptics from 'expo-haptics';
 import {
   User,
   Settings,
@@ -13,6 +15,7 @@ import {
   LogOut,
   Lock,
   CreditCard,
+  Camera,
 } from 'lucide-react-native';
 import { useTheme } from '../../lib/ThemeContext';
 import { useAuth } from '../../lib/AuthContext';
@@ -30,7 +33,22 @@ const menuItems = [
 
 export default function ProfileScreen() {
   const { colors, isDark, toggleTheme } = useTheme();
-  const { signOut } = useAuth();
+  const { user, signOut, updateProfile } = useAuth();
+
+  const pickImage = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.5,
+      base64: true,
+    });
+    if (!result.canceled && result.assets[0].base64) {
+      const uri = `data:image/jpeg;base64,${result.assets[0].base64}`;
+      await updateProfile({ profilePicture: uri });
+    }
+  };
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -56,7 +74,9 @@ export default function ProfileScreen() {
           marginBottom: spacing['3xl'],
         }}
       >
-        <View
+        <TouchableOpacity
+          onPress={pickImage}
+          activeOpacity={0.8}
           style={{
             width: 80,
             height: 80,
@@ -67,10 +87,35 @@ export default function ProfileScreen() {
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: spacing.md,
+            overflow: 'hidden',
           }}
         >
-          <User size={36} color={brand.emerald} strokeWidth={1.5} />
-        </View>
+          {user?.profilePicture ? (
+            <Image
+              source={{ uri: user.profilePicture }}
+              style={{ width: 80, height: 80, borderRadius: 40 }}
+            />
+          ) : (
+            <User size={36} color={brand.emerald} strokeWidth={1.5} />
+          )}
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              width: 24,
+              height: 24,
+              borderRadius: 12,
+              backgroundColor: brand.emerald,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderWidth: 2,
+              borderColor: colors.bgPrimary,
+            }}
+          >
+            <Camera size={12} color="#FFFFFF" strokeWidth={2} />
+          </View>
+        </TouchableOpacity>
         <Text
           style={{
             fontFamily: fonts.semibold,
@@ -78,7 +123,7 @@ export default function ProfileScreen() {
             color: colors.textPrimary,
           }}
         >
-          Muhammad Sada Yusuf
+          {user?.fullName ?? 'User'}
         </Text>
         <Text
           style={{
@@ -88,7 +133,7 @@ export default function ProfileScreen() {
             marginTop: spacing.xs,
           }}
         >
-          muhd@propvest.ng
+          {user?.email ?? ''}
         </Text>
         <View
           style={{

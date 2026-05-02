@@ -8,6 +8,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (email: string) => void;
   logout: () => void;
+  updateProfile: (updates: Partial<DeveloperUser>) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -15,6 +16,7 @@ export const AuthContext = createContext<AuthContextType>({
   isLoading: true,
   login: () => {},
   logout: () => {},
+  updateProfile: () => {},
 });
 
 const STORAGE_KEY = 'propvest_developer_user';
@@ -60,8 +62,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(STORAGE_KEY);
   }, []);
 
+  const updateProfile = useCallback((updates: Partial<DeveloperUser>) => {
+    setDeveloper((prev) => {
+      if (!prev) return prev;
+      const updated = { ...prev, ...updates };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ developer, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ developer, isLoading, login, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );

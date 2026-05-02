@@ -72,7 +72,7 @@ export function Sidebar({ sidebarOpen, onClose }: SidebarProps) {
         {developer && (
           <div className="border-t border-white/10 px-4 py-4">
             <div className="flex items-center gap-3">
-              <Avatar name={developer.companyName} size="sm" />
+              <Avatar name={developer.companyName} src={developer.profilePicture} size="sm" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">{developer.companyName}</p>
                 <p className="text-[11px] text-white/50 truncate">{developer.contactName}</p>

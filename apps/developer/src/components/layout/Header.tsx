@@ -1,7 +1,8 @@
 'use client';
 
-import { Menu, Bell, Search } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { UserMenu } from './UserMenu';
+import { NotificationDropdown } from '@/components/notifications/NotificationDropdown';
 
 interface HeaderProps {
   onMenuToggle: () => void;
@@ -29,13 +30,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
       {/* Right */}
       <div className="flex items-center gap-2">
-        <button
-          type="button"
-          className="relative w-9 h-9 flex items-center justify-center rounded-lg text-text-secondary hover:bg-bg-tertiary transition-colors cursor-pointer"
-        >
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full" />
-        </button>
+        <NotificationDropdown />
 
         <UserMenu />
       </div>

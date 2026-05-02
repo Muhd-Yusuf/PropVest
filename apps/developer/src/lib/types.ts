@@ -10,6 +10,7 @@ export interface DeveloperUser {
   bankName: string;
   bankAccountNumber: string;
   bankAccountName: string;
+  profilePicture?: string;
   createdAt: string;
 }
 

@@ -32,7 +32,7 @@ export function UserMenu() {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-bg-tertiary transition-colors cursor-pointer"
       >
-        <Avatar name={developer.companyName} size="sm" />
+        <Avatar name={developer.companyName} src={developer.profilePicture} size="sm" />
         <div className="hidden sm:block text-left">
           <p className="text-sm font-medium text-text-primary leading-tight">{developer.companyName}</p>
           <p className="text-[11px] text-text-tertiary">{developer.contactName}</p>

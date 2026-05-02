@@ -1,16 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Save } from 'lucide-react';
+import { Save, Camera } from 'lucide-react';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
+import { Avatar } from '@/components/ui/Avatar';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function SettingsPage() {
-  const { developer } = useAuth();
+  const { developer, updateProfile } = useAuth();
   const [companyName, setCompanyName] = useState(developer?.companyName || '');
   const [contactName, setContactName] = useState(developer?.contactName || '');
   const [phone, setPhone] = useState(developer?.phone || '');
@@ -20,7 +21,25 @@ export default function SettingsPage() {
   const [accountName, setAccountName] = useState(developer?.bankAccountName || '');
 
   const handleSave = () => {
-    alert('Settings saved (mock). In production, this would update via API.');
+    updateProfile({ companyName, contactName, phone, bio, bankName, bankAccountNumber: bankAccount, bankAccountName: accountName });
+  };
+
+  const handlePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      alert('Image must be under 2MB');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      updateProfile({ profilePicture: reader.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePicture = () => {
+    updateProfile({ profilePicture: undefined });
   };
 
   return (
@@ -39,6 +58,37 @@ export default function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <h3 className="text-sm font-semibold text-text-primary mb-4">Company Profile</h3>
+          <div className="flex items-center gap-4 mb-6 pb-6 border-b border-border-default">
+            <div className="relative group">
+              <Avatar name={developer?.companyName || ''} src={developer?.profilePicture} size="lg" />
+              <label
+                htmlFor="avatar-upload"
+                className="absolute inset-0 rounded-full bg-midnight/50 opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity"
+              >
+                <Camera className="w-5 h-5 text-white" />
+              </label>
+              <input
+                id="avatar-upload"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePictureUpload}
+              />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-text-primary">Company Logo</p>
+              <p className="text-xs text-text-tertiary mt-0.5">JPG or PNG. Max 2MB.</p>
+              {developer?.profilePicture && (
+                <button
+                  type="button"
+                  onClick={handleRemovePicture}
+                  className="text-xs text-error mt-1 cursor-pointer hover:underline"
+                >
+                  Remove photo
+                </button>
+              )}
+            </div>
+          </div>
           <div className="space-y-4">
             <Input label="Company Name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
             <Input label="Contact Person" value={contactName} onChange={(e) => setContactName(e.target.value)} />
