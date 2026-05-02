@@ -156,7 +156,7 @@ export default function MarketScreen() {
       {/* Results */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: spacing.screenPadding, gap: spacing.md, paddingTop: 0 }}
+        contentContainerStyle={{ padding: spacing.screenPadding, gap: spacing.md, paddingTop: 0, paddingBottom: insets.bottom + 20 }}
       >
         <Text style={{ fontFamily: fonts.regular, fontSize: fontSize.caption, color: colors.textTertiary }}>
           {filtered.length} listing{filtered.length !== 1 ? 's' : ''} available
