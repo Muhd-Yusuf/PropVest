@@ -80,7 +80,7 @@ export default function ReviewScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: 120 }}
+        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: insets.bottom + 100 }}
       >
         {/* Order Summary Card */}
         <View

@@ -68,7 +68,7 @@ export default function SellScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: 120 }}
+        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: insets.bottom + 100 }}
       >
         {/* Select Property */}
         <Text style={{ fontFamily: fonts.semibold, fontSize: fontSize.h4, color: colors.textPrimary, marginBottom: spacing.md }}>

@@ -80,7 +80,7 @@ export default function PropertyDetailScreen() {
     <View style={{ flex: 1, backgroundColor: colors.bgPrimary }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 100 }}
       >
         {/* Image Header */}
         <View

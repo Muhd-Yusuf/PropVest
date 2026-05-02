@@ -133,7 +133,7 @@ export default function NotificationsScreen() {
       </ScrollView>
 
       {/* Notifications List */}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}>
         {filtered.map((notification) => (
           <NotificationItem key={notification.id} notification={notification} />
         ))}

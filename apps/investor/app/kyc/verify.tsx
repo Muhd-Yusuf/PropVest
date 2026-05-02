@@ -123,7 +123,7 @@ export default function KYCVerifyScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: 120 }}
+        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: insets.bottom + 100 }}
       >
         <Text style={{ fontFamily: fonts.regular, fontSize: fontSize.body, color: colors.textSecondary, marginBottom: spacing['2xl'], lineHeight: 22 }}>
           Link your bank account to verify your identity. This also sets up your payout account.

@@ -77,7 +77,7 @@ export default function PaymentScreen() {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: 120 }}
+        contentContainerStyle={{ padding: spacing.screenPadding, paddingBottom: insets.bottom + 100 }}
       >
         {/* Amount to Pay */}
         <View style={{ alignItems: 'center', marginVertical: spacing.xl }}>
